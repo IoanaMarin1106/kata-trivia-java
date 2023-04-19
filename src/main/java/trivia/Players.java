@@ -16,10 +16,6 @@ public class Players {
         return currentPlayer;
     }
 
-    public String getPlayer(int player) {
-        return players.get(player);
-    }
-
     public String getCurrentPlayerName() {
         return players.get(currentPlayer);
     }

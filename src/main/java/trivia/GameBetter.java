@@ -27,7 +27,6 @@ public class GameBetter implements IGame {
       return gameConfiguration.getPlaces(players.getCurrentPlayer());
    }
 
-
    public boolean add(String playerName) {
       players.addPlayer(playerName);
       gameConfiguration.addNewPlayerConfig(players.getCapacity());
@@ -58,7 +57,6 @@ public class GameBetter implements IGame {
 
    }
 
-
    private String currentCategory() {
       int place = gameConfiguration.getPlaces(players.getCurrentPlayer());
       return questions.getQuestionCategoryByPlace(place);
@@ -68,56 +66,28 @@ public class GameBetter implements IGame {
       if (gameConfiguration.getInPenaltyBox(players.getCurrentPlayer())) {
          if (isGettingOutOfPenaltyBox) {
             System.out.println("Answer was correct!!!!");
-
-            int oldPursues = gameConfiguration.getPurses(players.getCurrentPlayer());
-            oldPursues += 1;
-
-            gameConfiguration.setPursues(players.getCurrentPlayer(), oldPursues);
-
-            System.out.println(players.getCurrentPlayerName()
-                    + " now has "
-                    + gameConfiguration.getPurses(players.getCurrentPlayer())
-                    + " Gold Coins.");
-
-            boolean winner = didPlayerWin();
-
+            boolean winner = gameConfiguration.incrementGoldCoins(players.getCurrentPlayer(), players.getCurrentPlayerName());
             players.incrementCurrentPlayer();
-
             return winner;
          } else {
             players.incrementCurrentPlayer();
             return true;
          }
       } else {
-
-         System.out.println("Answer was corrent!!!!");
-         int oldPursues = gameConfiguration.getPurses(players.getCurrentPlayer());
-         oldPursues += 1;
-
-         gameConfiguration.setPursues(players.getCurrentPlayer(), oldPursues);
-         System.out.println(players.getCurrentPlayerName()
-                 + " now has "
-                 + gameConfiguration.getPurses(players.getCurrentPlayer())
-                 + " Gold Coins.");
-
-         boolean winner = didPlayerWin();
+         System.out.println("Answer was correct!!!!");
+         boolean winner = gameConfiguration.incrementGoldCoins(players.getCurrentPlayer(), players.getCurrentPlayerName());
          players.incrementCurrentPlayer();
          return winner;
       }
    }
 
-
    public boolean wrongAnswer() {
       System.out.println("Question was incorrectly answered");
       System.out.println(players.getCurrentPlayerName() + " was sent to the penalty box");
 
+//      isGettingOutOfPenaltyBox = false;
       gameConfiguration.setInPenaltyBox(players.getCurrentPlayer(), true);
       players.incrementCurrentPlayer();
       return true;
-   }
-
-
-   private boolean didPlayerWin() {
-      return (gameConfiguration.getPurses(players.getCurrentPlayer()) != 6);
    }
 }

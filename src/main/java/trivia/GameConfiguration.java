@@ -10,14 +10,10 @@ public class GameConfiguration {
         return places[player];
     }
 
-    public int getPurses(int player) {
-        return purses[player];
-    }
-
     public boolean getInPenaltyBox(int player) {
         return inPenaltyBox[player];
     }
-    
+
     public void setPlaces(int player, int value) {
         places[player] = value;
     }
@@ -40,5 +36,16 @@ public class GameConfiguration {
         places[playersNum] = 0;
         purses[playersNum] = 0;
         inPenaltyBox[playersNum] = false;
+    }
+
+    public boolean incrementGoldCoins(int player, String playerName) {
+        purses[player]++;
+
+        System.out.println(playerName
+                + " now has "
+                + purses[player]
+                + " Gold Coins.");
+
+        return (purses[player] != 6);
     }
 }
